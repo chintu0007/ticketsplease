@@ -16,34 +16,34 @@ class TicketResource extends JsonResource
      */
     public function toArray(Request $request): array
     {        
-            return [
-                'type' => 'ticket',
-                'id' => $this->id,
-                'attributes' => [
-                    'title' => $this->title, // Add more fields as needed
-                    'description' => $this->when(
-                        $request->routeIs('tickets.show'),
-                        $this->description
-                    ),
-                    'status' => $this->status,
-                    'createdAt' => $this->created_at->toDateTimeString(),
-                    'updatedAt' => $this->updated_at->toDateTimeString()
-                ],
-                'relationships' => [
-                    'author' => [
-                        'data' => [
-                            'type' => 'User',
-                            'id' => $this->user_id
-                        ]
+        return [
+            'type' => 'ticket',
+            'id' => $this->id,
+            'attributes' => [
+                'title' => $this->title,
+                'description' => $this->when(
+                    $request->routeIs('tickets.show'),
+                    $this->description
+                ),
+                'status' => $this->status,
+                'createdAt' => $this->created_at,
+                'updatedAt' => $this->updated_at
+            ],
+            'relationships' => [
+                'author' => [
+                    'data' => [
+                        'type' => 'user',
+                        'id' => $this->user_id
+                    ],
+                    'links' => [
+                        'self' => route('users.show', ['user' => $this->user_id])
                     ]
-                ],
-                'includes' => [
-                    new UserResource($this->user)
-                ],
-                'links' => [
-                    'self' => route('tickets.show', ['ticket' => $this->id])
                 ]
-            ];
-        
+            ],
+            'includes' => new UserResource($this->whenLoaded('user')),
+            'links' => [
+                'self' => route('tickets.show', ['ticket' => $this->id])
+            ]
+        ];        
     }
 }
