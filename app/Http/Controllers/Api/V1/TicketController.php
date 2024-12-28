@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use App\Http\Requests\Api\V1\StoreTicketRequest;
 use App\Http\Requests\Api\V1\UpdateTicketRequest;
+use App\Http\Resources\V1\TicketResource;
 
 class TicketController extends Controller
 {
@@ -14,7 +15,8 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return Ticket::all();
+        $tickets = Ticket::paginate(5);
+        return TicketResource::collection($tickets);
     }
 
    
@@ -31,8 +33,9 @@ class TicketController extends Controller
      * Display the specified resource.
      */
     public function show(Ticket $ticket)
-    {
-        //
+    {   
+        $ticket_data = Ticket::findOrFail($ticket->id);
+        return new TicketResource($ticket_data);
     }
 
     
