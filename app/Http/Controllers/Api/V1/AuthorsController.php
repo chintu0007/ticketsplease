@@ -13,12 +13,9 @@ class AuthorsController extends ApiController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(AuthorFilter $filters)
     {
-        if ($this->include('tickets')) {
-            return UserResource::collection(User::with('tickets')->paginate());
-        }
-        return UserResource::collection(User::paginate());
+        return UserResource::collection(User::filter($filters)->paginate());
     }
 
     /**
