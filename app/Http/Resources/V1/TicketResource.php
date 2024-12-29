@@ -7,15 +7,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TicketResource extends JsonResource
 {
-
-    //public static $wrap = 'ticket';
+    // public static $wrap = 'ticket';
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
-     * @return array<int|string, mixed>
+     * @return array<string, mixed>
      */
     public function toArray(Request $request): array
-    {        
+    {
         return [
             'type' => 'ticket',
             'id' => $this->id,
@@ -36,14 +35,14 @@ class TicketResource extends JsonResource
                         'id' => $this->user_id
                     ],
                     'links' => [
-                        'self' => route('users.show', ['user' => $this->user_id])
+                        'self' => route('authors.show', ['author' => $this->user_id])
                     ]
                 ]
             ],
-            'includes' => new UserResource($this->whenLoaded('user')),
+            'includes' => new UserResource($this->whenLoaded('author')),
             'links' => [
                 'self' => route('tickets.show', ['ticket' => $this->id])
             ]
-        ];        
+        ];
     }
 }
