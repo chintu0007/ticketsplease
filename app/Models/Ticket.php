@@ -11,9 +11,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Ticket extends Model
 {
-    protected $guards = []; 
+    
     /** @use HasFactory<\Database\Factories\TicketFactory> */
     use HasFactory;
+    protected $fillable = ['title', 'status', 'description', 'user_id'];
+    protected $guards = []; 
 
     public function author(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id');
