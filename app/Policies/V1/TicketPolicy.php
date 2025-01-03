@@ -76,13 +76,11 @@ class TicketPolicy
     /**
      * Determine whether the user can store the model.
      */
-    public function store(User $user, Ticket $ticket): bool
+    public function store(User $user): bool
     {
-        if ($user->tokenCan(Abilities::CreateTicket)) {
-            return true;
-        } 
-        
-        return false;
+        return $user->tokenCan(Abilities::CreateTicket) || 
+            $user->tokenCan(Abilities::CreateOwnTicket);
+
     }
 
     /**
