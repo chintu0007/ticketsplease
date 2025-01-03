@@ -7,12 +7,12 @@ use App\Traits\ApiResponses;
 use App\Policies\V1\TicketPolicy;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+//use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ApiController extends Controller
 {
     use ApiResponses;
-    use AuthorizesRequests;
+    //use AuthorizesRequests;
 
     protected $policyClass;
     public function include(string $relationship) : bool {
