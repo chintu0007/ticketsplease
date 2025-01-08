@@ -4,9 +4,7 @@ namespace App\Permissions\V1;
 
 use App\Models\User;
 
-final class Abilities
-{
-
+final class Abilities {
     public const CreateTicket = 'ticket:create';
     public const UpdateTicket = 'ticket:update';
     public const ReplaceTicket = 'ticket:replace';
@@ -21,11 +19,7 @@ final class Abilities
     public const ReplaceUser = 'user:replace';
     public const DeleteUser = 'user:delete';
 
-
-
-    public static function getAbilities(User $user)
-    {
-
+    public static function getAbilities(User $user) {
         if ($user->is_manager) {
             return [
                 self::CreateTicket,
@@ -45,4 +39,6 @@ final class Abilities
             ];
         }
     }
+    
+
 }

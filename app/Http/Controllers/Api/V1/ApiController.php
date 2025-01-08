@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Ticket;
 use App\Traits\ApiResponses;
+use Illuminate\Auth\AuthenticationException;
 use App\Policies\V1\TicketPolicy;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -28,7 +29,13 @@ class ApiController extends Controller
 
 
     public function isAble($ability, $targetModel) {
-        $agte = Gate::policy(Ticket::class, TicketPolicy::class);          
-        return $agte->authorize($ability, [$targetModel, $this->policyClass]);
+        $gate = Gate::policy(Ticket::class, TicketPolicy::class);
+        try {
+            $gate->authorize($ability, [$targetModel, $this->policyClass]);
+            return true;
+        } catch (AuthenticationException $ex) {
+            return false;
+        }
+
     }
 }
