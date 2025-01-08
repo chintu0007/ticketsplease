@@ -25,9 +25,9 @@ class ReplaceTicketRequest extends BaseTicketRequest
             'data.attributes.title' => 'required|string',
             'data.attributes.description' => 'required|string',
             'data.attributes.status' => 'required|string|in:A,C,H,X',
-            'data.relationships.author.data.id' => 'required|integer'
-        ];        
+            'data.relationships.author.data.id' => 'required|integer',
+        ];
+
         return $rules;
     }
-    
 }
