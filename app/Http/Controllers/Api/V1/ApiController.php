@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Ticket;
 use App\Traits\ApiResponses;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Access\AuthorizationException;
 use App\Policies\V1\TicketPolicy;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -33,7 +34,7 @@ class ApiController extends Controller
         try {
             $gate->authorize($ability, [$targetModel, $this->policyClass]);
             return true;
-        } catch (AuthenticationException $ex) {
+        } catch (AuthorizationException $ex) {
             return false;
         }
 
